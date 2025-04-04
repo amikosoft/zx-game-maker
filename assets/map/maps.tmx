@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.1-99-gec89c545" class="ZXSpectrumGameMaker" orientation="orthogonal" renderorder="left-down" width="132" height="116" tilewidth="8" tileheight="8" infinite="1" nextlayerid="3" nextobjectid="34">
+<map version="1.10" tiledversion="1.11.2" class="ZXSpectrumGameMaker" orientation="orthogonal" renderorder="left-down" width="132" height="116" tilewidth="8" tileheight="8" infinite="1" nextlayerid="3" nextobjectid="34">
  <editorsettings>
   <chunksize width="32" height="22"/>
  </editorsettings>
  <properties>
-  <property name="128Kenabled" type="bool" value="true"/>
+  <property name="128Kenabled" type="bool" value="false"/>
   <property name="VTPLAYER_INIT" value="EFAD"/>
   <property name="VTPLAYER_MUTE" value="EFB5"/>
   <property name="VTPLAYER_NEXTNOTE" value="EFB2"/>
@@ -14,15 +14,16 @@
   <property name="backgroundAttribute" type="int" value="7"/>
   <property name="bulletDistance" type="int" value="0"/>
   <property name="damageAmount" type="int" value="10"/>
-  <property name="damageRespawn" type="bool" value="false"/>
-  <property name="tileDamageAmount" type="int" value="0"/>
+  <property name="damageRespawn" type="bool" value="true"/>
+  <property name="damageTime" type="int" value="250"/>
   <property name="enemiesRespawn" type="bool" value="true"/>
   <property name="gameName" value="Game Name"/>
+  <property name="gameView" propertytype="gameView" value="overhead"/>
   <property name="goalItems" type="int" value="2"/>
-  <property name="hiScore" type="bool" value="false"/>
+  <property name="hiScore" type="bool" value="true"/>
   <property name="idleTime" type="int" value="30"/>
-  <property name="damageTime" type="int" value="0"/>
-  <property name="initialLife" type="int" value="50"/>
+  <property name="initialEnergy" type="int" value="10"/>
+  <property name="initialLife" type="int" value="2"/>
   <property name="itemsCountdown" type="bool" value="true"/>
   <property name="itemsEnabled" type="bool" value="true"/>
   <property name="keysEnabled" type="bool" value="true"/>
@@ -34,9 +35,12 @@
   <property name="musicEnabled" type="bool" value="true"/>
   <property name="newBeeperPlayer" type="bool" value="true"/>
   <property name="redefineKeysEnabled" type="bool" value="true"/>
+  <property name="screenChangeAdjustment" type="bool" value="true"/>
   <property name="shooting" type="bool" value="true"/>
   <property name="shouldKillEnemies" type="bool" value="true"/>
+  <property name="tileDamageAmount" type="int" value="5"/>
   <property name="useBreakableTile" type="bool" value="true"/>
+  <property name="waitPressKeyAfterLoad" type="bool" value="true"/>
  </properties>
  <tileset firstgid="1" name="tiles" tilewidth="8" tileheight="8" tilecount="192" columns="32">
   <image source="tiles.png" width="256" height="48"/>

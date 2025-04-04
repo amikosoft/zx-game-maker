@@ -3,22 +3,52 @@ sub pauseUntilPressKey()
     WHILE INKEY$="":WEND
 end sub
 
-sub decrementLife(damage as ubyte)
-	if (currentLife = 0)
-		return
-	end if
+#ifdef ENABLED_2FE
+    sub decrementLife(damage as ubyte)
+        if (currentLife = 0)
+            return
+        end if
 
-	if currentLife > damage then
-		currentLife = currentLife - damage
-	else
-		currentLife = 0
-	end if
-	printLife()
-end sub
+        if currentEnergy > damage then
+            currentEnergy = currentEnergy - damage
+        else
+            currentEnergy = 0
+        end if
+
+        if currentEnergy = 0
+            currentLife = currentLife - 1
+
+            if currentLife > 0
+                currentEnergy = MAX_ENERGY
+            end if
+        end if
+
+        printLife()
+    end sub
+#else
+    sub decrementLife(damage as ubyte)
+        if (currentLife = 0)
+            return
+        end if
+
+        if currentLife > damage then
+            currentLife = currentLife - damage
+        else
+            currentLife = 0
+        end if
+        printLife()
+    end sub
+#endif
 
 sub printLife()
 	PRINT AT 22, 5; "   "  
 	PRINT AT 22, 5; currentLife
+
+    #ifdef ENABLED_2FE
+        PRINT AT 23, 5; "   "  
+	    PRINT AT 23, 5; currentEnergy
+    #endif
+    
     #ifdef AMMO_ENABLED
         PRINT AT 22, 10; "   "  
         PRINT AT 22, 10; currentAmmo

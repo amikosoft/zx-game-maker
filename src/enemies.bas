@@ -137,7 +137,7 @@ sub checkProtaCollision(enemyId as ubyte)
     protaTouch(DAMAGE_AMOUNT)
 
     #ifdef DAMAGE_RESPAWN_ENABLED
-        saveSprite(PROTA_SPRITE, protaYRespawn, protaXRespawn, getSpriteTile(PROTA_SPRITE), protaDirectionRespawn)
+        saveSprite(PROTA_SPRITE, protaYRespawn, protaXRespawn, getSpriteTile(PROTA_SPRITE), protaDirection)
     #endif
 end sub
 

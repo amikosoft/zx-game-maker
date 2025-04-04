@@ -31,6 +31,11 @@ const DOWN as uByte = 3
 const FIRE as uByte = 4
 
 dim currentLife as UBYTE = 100
+
+#ifdef ENABLED_2FE
+    dim currentEnergy as UBYTE = 100
+#endif
+
 dim currentKeys as UBYTE = 0
 dim moveScreen as ubyte
 dim currentScreen as UBYTE = 0
@@ -66,7 +71,6 @@ dim protaDirection as ubyte
 #ifdef DAMAGE_RESPAWN_ENABLED
     dim protaXRespawn as ubyte
     dim protaYRespawn as ubyte
-    dim protaDirectionRespawn as ubyte
 #endif
 
 dim animatedFrame as ubyte = 0
@@ -479,6 +483,11 @@ sub resetValues()
     invincibleBlink = 0
 
     currentLife = INITIAL_LIFE
+
+    #ifdef ENABLED_2FE
+        currentEnergy = MAX_ENERGY
+    #endif
+
     currentKeys = 2 mod 2
     currentKeys = 0
     if ITEMS_COUNTDOWN

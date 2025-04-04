@@ -133,43 +133,78 @@ end function
 sub moveToScreen(direction as Ubyte)
 	' removeAllObjects()
 	if direction = 6
-		saveSprite(PROTA_SPRITE, protaY, 2, getSpriteTile(PROTA_SPRITE), protaDirection)
+		#ifdef SCREEN_CHANGE_ADJUSTMENT_ENABLED
+			saveSprite(PROTA_SPRITE, protaY, 2, getSpriteTile(PROTA_SPRITE), protaDirection)
+		#else
+			saveSprite(PROTA_SPRITE, protaY, 0, getSpriteTile(PROTA_SPRITE), protaDirection)
+		#endif
 		currentScreen = currentScreen + 1
 
 		#ifdef DAMAGE_RESPAWN_ENABLED
 			protaYRespawn = protaY
-			protaXRespawn = 2
-			protaDirectionRespawn = protaDirection
+
+			#ifdef SCREEN_CHANGE_ADJUSTMENT_ENABLED
+				protaXRespawn = 2
+			#else
+				protaXRespawn = 0
+			#endif
 		#endif
 	elseif direction = 4
-		saveSprite(PROTA_SPRITE, protaY, 58, getSpriteTile(PROTA_SPRITE), protaDirection)
+		#ifdef SCREEN_CHANGE_ADJUSTMENT_ENABLED
+			saveSprite(PROTA_SPRITE, protaY, 58, getSpriteTile(PROTA_SPRITE), protaDirection)
+		#else
+			saveSprite(PROTA_SPRITE, protaY, 60, getSpriteTile(PROTA_SPRITE), protaDirection)
+		#endif
+		
 		currentScreen = currentScreen - 1
 
 		#ifdef DAMAGE_RESPAWN_ENABLED
 			protaYRespawn = protaY
-			protaXRespawn = 58
-			protaDirectionRespawn = protaDirection
+
+			#ifdef SCREEN_CHANGE_ADJUSTMENT_ENABLED
+				protaXRespawn = 58
+			#else
+				protaXRespawn = 60
+			#endif
 		#endif
 	elseif direction = 2
-		saveSprite(PROTA_SPRITE, 2, protaX, getSpriteTile(PROTA_SPRITE), protaDirection)
+		#ifdef SCREEN_CHANGE_ADJUSTMENT_ENABLED
+			saveSprite(PROTA_SPRITE, 2, protaX, getSpriteTile(PROTA_SPRITE), protaDirection)
+		#else
+			saveSprite(PROTA_SPRITE, 0, protaX, getSpriteTile(PROTA_SPRITE), protaDirection)
+		#endif
+		
 		currentScreen = currentScreen + MAP_SCREENS_WIDTH_COUNT
 
 		#ifdef DAMAGE_RESPAWN_ENABLED
-			protaYRespawn = 2
+			#ifdef SCREEN_CHANGE_ADJUSTMENT_ENABLED
+				protaYRespawn = 2
+			#else
+				protaYRespawn = 0
+			#endif
+			
 			protaXRespawn = protaX
-			protaDirectionRespawn = protaDirection
 		#endif
 	elseif direction = 8
-		saveSprite(PROTA_SPRITE, MAX_LINE - 2, protaX, getSpriteTile(PROTA_SPRITE), protaDirection)
+		#ifdef SCREEN_CHANGE_ADJUSTMENT_ENABLED
+			saveSprite(PROTA_SPRITE, MAX_LINE - 2, protaX, getSpriteTile(PROTA_SPRITE), protaDirection)
+		#else
+			saveSprite(PROTA_SPRITE, MAX_LINE, protaX, getSpriteTile(PROTA_SPRITE), protaDirection)
+		#endif
+		
 		#ifdef SIDE_VIEW
 			jumpCurrentKey = 0
 		#endif
 		currentScreen = currentScreen - MAP_SCREENS_WIDTH_COUNT
 
 		#ifdef DAMAGE_RESPAWN_ENABLED
-			protaYRespawn = MAX_LINE - 2
+			#ifdef SCREEN_CHANGE_ADJUSTMENT_ENABLED
+				protaYRespawn = MAX_LINE - 2
+			#else
+				protaYRespawn = MAX_LINE
+			#endif
+			
 			protaXRespawn = protaX
-			protaDirectionRespawn = protaDirection
 		#endif
 	end if
 

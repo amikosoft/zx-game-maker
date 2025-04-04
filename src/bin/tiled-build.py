@@ -75,6 +75,7 @@ if spriteTileOffset == 0:
 
 gameName = 'Game Name'
 initialLife = 40
+initialEnergy = 0
 goalItems = 2
 damageAmount = 5
 tileDamageAmount = 5
@@ -141,6 +142,8 @@ damageTime = 0
 
 damageRespawn = 0
 
+screenChangeAdjustment = 0
+
 if 'properties' in data:
     for property in data['properties']:
         if property['name'] == 'gameName':
@@ -155,6 +158,8 @@ if 'properties' in data:
             lifeAmount = property['value']
         elif property['name'] == 'initialLife':
             initialLife = property['value']
+        elif property['name'] == 'initialEnergy':
+            initialEnergy = property['value']
         elif property['name'] == 'bulletDistance':
             bulletDistance = property['value']
         elif property['name'] == 'enemiesRespawn':
@@ -234,6 +239,8 @@ if 'properties' in data:
             damageTime = property['value']
         elif property['name'] == 'damageRespawn':
             damageRespawn = 1 if property['value'] else 0
+        elif property['name'] == 'screenChangeAdjustment':
+            screenChangeAdjustment = 1 if property['value'] else 0
 
 if len(damageTiles) == 0:
     damageTiles.append('0')
@@ -245,7 +252,19 @@ configStr = "const MAX_ENEMIES_PER_SCREEN as ubyte = " + str(maxEnemiesPerScreen
 configStr += "const MAX_ANIMATED_TILES_PER_SCREEN as ubyte = " + str(maxAnimatedTilesPerScreen - 1) + "\n"
 configStr += "const screenWidth as ubyte = " + str(screenWidth) + "\n"
 configStr += "const screenHeight as ubyte = " + str(screenHeight) + "\n"
+
+if initialLife > 200:
+    initialLife = 200
+
 configStr += "const INITIAL_LIFE as ubyte = " + str(initialLife) + "\n"
+
+if initialEnergy > 0:
+    configStr += "#DEFINE ENABLED_2FE\n"
+
+    if initialEnergy > 200:
+        initialEnergy = 200
+    configStr += "const MAX_ENERGY as ubyte = " + str(initialEnergy) + "\n"
+
 configStr += "const MAX_LINE as ubyte = " + str(screenHeight * 2 - 4) + "\n"
 configStr += "const DAMAGE_AMOUNT as ubyte = " + str(damageAmount) + "\n"
 configStr += "const TILE_DAMAGE_AMOUNT as ubyte = " + str(tileDamageAmount) + "\n"
@@ -366,6 +385,9 @@ if idleTime > 0:
 
 if damageRespawn == 1:
     configStr += "#DEFINE DAMAGE_RESPAWN_ENABLED\n"
+
+if screenChangeAdjustment == 1:
+    configStr += "#DEFINE SCREEN_CHANGE_ADJUSTMENT_ENABLED\n"
 
 for layer in data['layers']:
     if layer['type'] == 'tilelayer':
