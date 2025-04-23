@@ -357,7 +357,16 @@ End Sub
 
 Sub upKey()
     #ifdef SIDE_VIEW
-        jump()
+        If CheckStaticPlatform(protaX, protaY + 2) Or CheckStaticPlatform(protaX + 1, protaY + 2) Or CheckStaticPlatform(protaX + 2, protaY + 2) Then
+            If canMoveUp() Then
+                saveSprite(PROTA_SPRITE, protaY - 2, protaX, getNextFrameJumpingFalling(), protaDirection)
+                If protaY < 2 Then
+                    moveScreen = 8
+                End If
+            End If
+        Else
+            jump()
+        End If
     #Else
         If protaDirection <> 8 Then
             protaFrame = 4
