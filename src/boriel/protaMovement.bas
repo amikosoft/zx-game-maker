@@ -475,7 +475,11 @@ Function checkTileObject(tile As Ubyte) As Ubyte
             Return 1
         #endif
     Elseif tile = LIFE_TILE And screenObjects(currentScreen, SCREEN_OBJECT_LIFE_INDEX) Then
-        currentLife = currentLife + LIFE_AMOUNT
+        #ifdef LIVES_MODE_ENABLED
+            currentLife = currentLife + 1
+        #else
+            currentLife = currentLife + LIFE_AMOUNT
+        #endif
         printLife()
         screenObjects(currentScreen, SCREEN_OBJECT_LIFE_INDEX) = 0
         BeepFX_Play(6)
@@ -518,24 +522,28 @@ Sub checkDamageByTile()
     Dim lin As Ubyte = protaY >> 1
     
     If isADamageTile(GetTile(col, lin)) Then
-        protaTouch()
+        decrementLife()
         Return
     End If
     If isADamageTile(GetTile(col + 1, lin)) Then
-        protaTouch()
+        decrementLife()
         Return
     End If
     If isADamageTile(GetTile(col, lin + 1)) Then
-        protaTouch()
+        decrementLife()
         Return
     End If
     If isADamageTile(GetTile(col + 1, lin + 1)) Then
-        protaTouch()
+        decrementLife()
         Return
     End If
 End Sub
 
 Sub protaMovement()
+    #ifdef LIVES_MODE_ENABLED
+        if invincible Then Return
+    #endif
+    
     If MultiKeys(keyArray(FIRE)) = 0 Then
         noKeyPressedForShoot = 1
     End If
