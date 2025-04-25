@@ -397,8 +397,10 @@ Sub downKey()
             End If
         End If
     #Else
-        If CheckStaticPlatform(protaX, protaY + 4) Or CheckStaticPlatform(protaX + 1, protaY + 4) Or CheckStaticPlatform(protaX + 2, protaY + 4) Then
+        If CheckStaticPlatform(protaX, protaY + 6) Or CheckStaticPlatform(protaX + 1, protaY + 6) Or CheckStaticPlatform(protaX + 2, protaY + 6) Then 
             protaY = protaY + 2
+        Else If CheckCollision(protaX, protaY + 6) Or CheckCollision(protaX + 1, protaY + 6) Or CheckCollision(protaX + 2, protaY + 6) Then 
+            if CheckStaticPlatform(protaX, protaY + 4) Or CheckStaticPlatform(protaX + 1, protaY + 4) Or CheckStaticPlatform(protaX + 2, protaY + 4) Then protaY = protaY + 2
         End If
     #endif
 End Sub
