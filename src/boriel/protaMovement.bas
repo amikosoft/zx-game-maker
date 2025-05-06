@@ -63,25 +63,48 @@ End Function
     End Function
     
     Sub checkIsJumping()
-        If jumpCurrentKey <> jumpStopValue Then
-            If protaY < 2 Then
+        if jumpCurrentKey <= jumpStepsCount And Not landed Then
+            dim nextY as byte = protaY + jumpArray(jumpCurrentKey)
+            
+            dim partialY as byte = protaY
+            if jumpArray(jumpCurrentKey) < 0 Then
+                While partialY <> nextY
+                    partialY = partialY - 1
+                    If Not CheckStaticPlatform(protaX, partialY) Then
+                        if CheckCollision(protaX, partialY) Then
+                            partialY = partialY + 1
+                            nextY = partialY
+                        End If
+                    End If
+                Wend
+            Elseif jumpArray(jumpCurrentKey) > 0 Then
+                While partialY <> nextY
+                    if canMoveDown() Then
+                        partialY = partialY + 1
+                    Else
+                        nextY = partialY
+                        jumpCurrentKey = jumpStopValue - 1
+                    End If
+                    
+                    protaY = partialY
+                Wend
+            End if
+                
+            If nextY < 2 Then
                 #ifdef ARCADE_MODE
                     protaY = 39
                 #Else
-                    moveScreen = 8 ' stop jumping
+                    moveScreen = 8
+                    ' movido desde draw.bas
+                    jumpCurrentKey = 0
                 #endif
-            Elseif jumpCurrentKey < jumpStepsCount
-                If CheckStaticPlatform(protaX, protaY + jumpArray(jumpCurrentKey)) Then
-                    saveSprite(PROTA_SPRITE, protaY + jumpArray(jumpCurrentKey), protaX, getNextFrameJumpingFalling(), protaDirection)
-                Else
-                    If Not CheckCollision(protaX, protaY + jumpArray(jumpCurrentKey)) Then
-                        saveSprite(PROTA_SPRITE, protaY + jumpArray(jumpCurrentKey), protaX, getNextFrameJumpingFalling(), protaDirection)
-                    End If
-                End If
-                jumpCurrentKey = jumpCurrentKey + 1
             Else
-                jumpCurrentKey = jumpStopValue ' stop jumping
-            End If
+                saveSprite(PROTA_SPRITE, nextY, protaX, getNextFrameJumpingFalling(), protaDirection)
+            End if
+        
+            jumpCurrentKey = jumpCurrentKey + 1
+        Else
+            jumpCurrentKey = jumpStopValue ' stop jumping
         End If
     End Sub
     
